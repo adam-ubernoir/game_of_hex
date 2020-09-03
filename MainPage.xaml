@@ -1,0 +1,1647 @@
+﻿<Page
+    x:Class="polygon.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:polygon"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <!-- 
+        
+        the following button code was adapted with reference to these websites
+Microsoft Developer Network (2018) HexButton [online] 
+        Available at: https://social.msdn.microsoft.com/Forums/de-DE/89d66807-54b5-4f19-b224-1ec6526682c4/hexbutton?forum=winstoreappsde [Accessed 16th October 2019].
+Microsoft TechNet, (2019). Make a Styled Button in XAML for Universal Windows Apps [online] 
+        Available at: https://social.technet.microsoft.com/wiki/contents/articles/30199.make-a-styled-button-in-xaml-for-universal-windows-apps.aspx [Accessed 16th October 2019].
+-->
+        <Style x:Key="ButtonPlayer1" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource ButtonBackground}" />
+            <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}" />
+            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+            <Setter Property="Padding" Value="8,4,8,4" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="UseSystemFocusVisuals" Value="True" />
+            <Setter Property="FocusVisualMargin" Value="-3" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="Transparent">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Path" Storyboard.TargetProperty="Fill">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Path" Storyboard.TargetProperty="Fill">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+
+
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="Path.Fill" Value="AliceBlue"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Path  Stroke="Blue" Fill="Blue" 
+      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+      Margin="0" Width="50" Height="50" x:Name="Path" 
+  Stretch="Fill" 
+      Data="M8.660254,0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 z"/>
+                            <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}" />
+
+                        </Grid>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonPlayer2" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource ButtonBackground}" />
+            <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}" />
+            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+            <Setter Property="Padding" Value="8,4,8,4" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="UseSystemFocusVisuals" Value="True" />
+            <Setter Property="FocusVisualMargin" Value="-3" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="Transparent">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Path" Storyboard.TargetProperty="Fill">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Path" Storyboard.TargetProperty="Fill">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+
+
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="Path.Fill" Value="Black"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Path  Stroke="Blue" Fill="Blue" 
+      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+      Margin="0" Width="50" Height="50" x:Name="Path" 
+  Stretch="Fill" 
+      Data="M8.660254,0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 z"/>
+                            <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}" />
+                        </Grid>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ButtonFini" TargetType="Button">
+                                <Setter Property="Background" Value="{ThemeResource ButtonBackground}" />
+                                <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}" />
+                                <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
+                                <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+                                <Setter Property="Padding" Value="8,4,8,4" />
+                                <Setter Property="HorizontalAlignment" Value="Left" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                                <Setter Property="FontWeight" Value="Normal" />
+                                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                                <Setter Property="FocusVisualMargin" Value="-3" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid x:Name="RootGrid" Background="Transparent">
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup x:Name="CommonStates">
+                                                        <VisualState x:Name="Normal">
+                                                            <Storyboard>
+                                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="PointerOver">
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Path" Storyboard.TargetProperty="Fill">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="Pressed">
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Path" Storyboard.TargetProperty="Fill">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}" />
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                                <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                                                            </Storyboard>
+                                                        </VisualState>
+
+
+                                                        <VisualState x:Name="Disabled">
+                                                            <VisualState.Setters>
+                                                                <Setter Target="Path.Fill" Value="Blue"/>
+                                                            </VisualState.Setters>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+                                                <Path  Stroke="Blue" Fill="Blue" 
+      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+      Margin="0" Width="50" Height="50" x:Name="Path" 
+  Stretch="Fill" 
+      Data="M8.660254,0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 z"/>
+                                                <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}" />
+                                            </Grid>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+                        
+
+    </Page.Resources>
+    <Grid>
+        <StackPanel x:Name="contentPanel" Margin="0,50,0,0">
+            <Canvas>
+
+                <Button x:Name="A1" Canvas.Left="0"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="A1"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="A1_Click"/>
+
+                <Button x:Name="A2" Canvas.Left="50"
+                        
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="A2"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="A2_Click"/>
+
+                <Button x:Name="A3" Canvas.Left="100"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="A3"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="A3_Click"/>
+
+                <Button x:Name="A4" Canvas.Left="150"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="A4"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="A4_Click"/>
+
+                <Button x:Name="A5" Canvas.Left="200"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="A5"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="A5_Click"/>
+
+                <Button x:Name="A6" Canvas.Left="250"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="A6"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="A6_Click"/>
+
+                <Button x:Name="A7" Canvas.Left="300"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="A7"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="A7_Click"/>
+
+                <Button x:Name="A8" Canvas.Left="350"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="A8"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="A8_Click"/>
+
+                <Button x:Name="A9" Canvas.Left="400"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="A9"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="A9_Click"/>
+
+                <Button x:Name="A10" Canvas.Left="450"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="A10"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="A10_Click"/>
+
+                <Button x:Name="A11" Canvas.Left="500"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="A11"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="A11_Click"/>
+
+
+                <Button x:Name="B1" Canvas.Left="25"
+                        Canvas.Top="37.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="B1"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="B1_Click"/>
+
+                <Button x:Name="B2" Canvas.Left="75"
+                        Canvas.Top="37.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="B2"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="B2_Click"/>
+
+                <Button x:Name="B3" Canvas.Left="125"
+                        Canvas.Top="37.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="B3"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="B3_Click"/>
+
+                <Button x:Name="B4" Canvas.Left="175"
+                        Canvas.Top="37.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="B4"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="B4_Click"/>
+
+                <Button x:Name="B5" Canvas.Left="225"
+                        Canvas.Top="37.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="B5"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="B5_Click"/>
+
+                <Button x:Name="B6" Canvas.Left="275"
+                        Canvas.Top="37.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="B6"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="B6_Click"/>
+
+                <Button x:Name="B7" Canvas.Left="325"
+                        Canvas.Top="37.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="B7"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="B7_Click"/>
+
+                <Button x:Name="B8" Canvas.Left="375"
+                        Canvas.Top="37.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="B8"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="B8_Click"/>
+
+                <Button x:Name="B9" Canvas.Left="425"
+                        Canvas.Top="37.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="B9"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="B9_Click"/>
+
+
+                <Button x:Name="B10" Canvas.Left="475"
+                        Canvas.Top="37.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="B10"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="B10_Click"/>
+
+
+                <Button x:Name="B11" Canvas.Left="525"
+                        Canvas.Top="37.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="B11"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="B11_Click"/>
+
+                <Button x:Name="C1" Canvas.Left="50"
+                        Canvas.Top="75"
+
+                Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="C1"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="C1_Click"/>
+
+                <Button x:Name="C2" Canvas.Left="100"
+                        Canvas.Top="75"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="C2"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="C2_Click"/>
+
+                <Button x:Name="C3" Canvas.Left="150"
+                        Canvas.Top="75"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="C3"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="C3_Click"/>
+
+                <Button x:Name="C4" Canvas.Left="200"
+                        Canvas.Top="75"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="C4"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="C4_Click"/>
+
+                <Button x:Name="C5" Canvas.Left="250"
+                        Canvas.Top="75"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="C5"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="C5_Click"/>
+
+                <Button x:Name="C6" Canvas.Left="300"
+                        Canvas.Top="75"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="C6"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="C6_Click"/>
+
+                <Button x:Name="C7" Canvas.Left="350"
+                        Canvas.Top="75"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="C7"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="C7_Click"/>
+
+                <Button x:Name="C8" Canvas.Left="400"
+                        Canvas.Top="75"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="C8"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="C8_Click"/>
+
+                <Button x:Name="C9" Canvas.Left="450"
+                        Canvas.Top="75"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="C9"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="C9_Click"/>
+
+
+                <Button x:Name="C10" Canvas.Left="500"
+                        Canvas.Top="75"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="C10"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="C10_Click"/>
+
+
+                <Button x:Name="C11" Canvas.Left="550"
+                        Canvas.Top="75"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="C11"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="C11_Click"/>
+
+                <Button x:Name="D1" Canvas.Left="75"
+                        Canvas.Top="112.5"
+
+                Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="D1"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="D1_Click"/>
+
+                <Button x:Name="D2" Canvas.Left="125"
+                        Canvas.Top="112.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="D2"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="D2_Click"/>
+
+                <Button x:Name="D3" Canvas.Left="175"
+                        Canvas.Top="112.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="D3"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="D3_Click"/>
+
+                <Button x:Name="D4" Canvas.Left="225"
+                        Canvas.Top="112.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="D4"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="D4_Click"/>
+
+                <Button x:Name="D5" Canvas.Left="275"
+                        Canvas.Top="112.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="D5"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="D5_Click"/>
+
+                <Button x:Name="D6" Canvas.Left="325"
+                        Canvas.Top="112.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="D6"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="D6_Click"/>
+
+                <Button x:Name="D7" Canvas.Left="375"
+                        Canvas.Top="112.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="D7"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="D7_Click"/>
+
+                <Button x:Name="D8" Canvas.Left="425"
+                        Canvas.Top="112.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="D8"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="D8_Click"/>
+
+                <Button x:Name="D9" Canvas.Left="475"
+                        Canvas.Top="112.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="D9"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="D9_Click"/>
+
+
+                <Button x:Name="D10" Canvas.Left="525"
+                        Canvas.Top="112.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="D10"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="D10_Click"/>
+
+
+                <Button x:Name="D11" Canvas.Left="575"
+                        Canvas.Top="112.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="D11"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="D11_Click"/>
+
+                <Button x:Name="E1" Canvas.Left="100"
+                        Canvas.Top="150"
+
+                Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="E1"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="E1_Click"/>
+
+                <Button x:Name="E2" Canvas.Left="150"
+                        Canvas.Top="150"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="E2"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="E2_Click"/>
+
+                <Button x:Name="E3" Canvas.Left="200"
+                        Canvas.Top="150"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="E3"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="E3_Click"/>
+
+                <Button x:Name="E4" Canvas.Left="250"
+                        Canvas.Top="150"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="E4"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="E4_Click"/>
+
+                <Button x:Name="E5" Canvas.Left="300"
+                        Canvas.Top="150"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="E5"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="E5_Click"/>
+
+                <Button x:Name="E6" Canvas.Left="350"
+                        Canvas.Top="150"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="E6"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="E6_Click"/>
+
+                <Button x:Name="E7" Canvas.Left="400"
+                        Canvas.Top="150"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="E7"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="E7_Click"/>
+
+                <Button x:Name="E8" Canvas.Left="450"
+                        Canvas.Top="150"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="E8"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="E8_Click"/>
+
+                <Button x:Name="E9" Canvas.Left="500"
+                        Canvas.Top="150"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="E9"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="E9_Click"/>
+
+
+                <Button x:Name="E10" Canvas.Left="550"
+                        Canvas.Top="150"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="E10"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="E10_Click"/>
+
+
+                <Button x:Name="E11" Canvas.Left="600"
+                        Canvas.Top="150"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="E11"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="E11_Click"/>
+
+                <Button x:Name="F1" Canvas.Left="125"
+                        Canvas.Top="187.5"
+
+                Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="F1"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="F1_Click"/>
+
+                <Button x:Name="F2" Canvas.Left="175"
+                        Canvas.Top="187.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="F2"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="F2_Click"/>
+
+                <Button x:Name="F3" Canvas.Left="225"
+                        Canvas.Top="187.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="F3"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="F3_Click"/>
+
+                <Button x:Name="F4" Canvas.Left="275"
+                        Canvas.Top="187.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="F4"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="F4_Click"/>
+
+                <Button x:Name="F5" Canvas.Left="325"
+                        Canvas.Top="187.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="F5"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="F5_Click"/>
+
+                <Button x:Name="F6" Canvas.Left="375"
+                        Canvas.Top="187.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="F6"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="F6_Click"/>
+
+                <Button x:Name="F7" Canvas.Left="425"
+                        Canvas.Top="187.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="F7"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="F7_Click"/>
+
+                <Button x:Name="F8" Canvas.Left="475"
+                        Canvas.Top="187.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="F8"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="F8_Click"/>
+
+                <Button x:Name="F9" Canvas.Left="525"
+                        Canvas.Top="187.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="F9"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="F9_Click"/>
+
+
+                <Button x:Name="F10" Canvas.Left="575"
+                        Canvas.Top="187.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="F10"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="F10_Click"/>
+
+
+                <Button x:Name="F11" Canvas.Left="625"
+                        Canvas.Top="187.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="F11"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="F11_Click"/>
+
+                <Button x:Name="G1" Canvas.Left="150"
+                        Canvas.Top="225"
+
+                Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="G1"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="G1_Click"/>
+
+                <Button x:Name="G2" Canvas.Left="200"
+                        Canvas.Top="225"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="G2"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="G2_Click"/>
+
+                <Button x:Name="G3" Canvas.Left="250"
+                        Canvas.Top="225"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="G3"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="G3_Click"/>
+
+                <Button x:Name="G4" Canvas.Left="300"
+                        Canvas.Top="225"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="G4"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="G4_Click"/>
+
+                <Button x:Name="G5" Canvas.Left="350"
+                        Canvas.Top="225"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="G5"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="G5_Click"/>
+
+                <Button x:Name="G6" Canvas.Left="400"
+                        Canvas.Top="225"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="G6"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="G6_Click"/>
+
+                <Button x:Name="G7" Canvas.Left="450"
+                        Canvas.Top="225"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="G7"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="G7_Click"/>
+
+                <Button x:Name="G8" Canvas.Left="500"
+                        Canvas.Top="225"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="G8"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="G8_Click"/>
+
+                <Button x:Name="G9" Canvas.Left="550"
+                        Canvas.Top="225"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="G9"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="G9_Click"/>
+
+
+                <Button x:Name="G10" Canvas.Left="600"
+                        Canvas.Top="225"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="G10"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="G10_Click"/>
+
+
+                <Button x:Name="G11" Canvas.Left="650"
+                        Canvas.Top="225"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="G11"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="G11_Click"/>
+
+                <Button x:Name="H1" Canvas.Left="175"
+                        Canvas.Top="262.5"
+
+                Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="H1"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="H1_Click"/>
+
+                <Button x:Name="H2" Canvas.Left="225"
+                        Canvas.Top="262.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="H2"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="H2_Click"/>
+
+                <Button x:Name="H3" Canvas.Left="275"
+                        Canvas.Top="262.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="H3"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="H3_Click"/>
+
+                <Button x:Name="H4" Canvas.Left="325"
+                        Canvas.Top="262.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="H4"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="H4_Click"/>
+
+                <Button x:Name="H5" Canvas.Left="375"
+                        Canvas.Top="262.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="H5"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="H5_Click"/>
+
+                <Button x:Name="H6" Canvas.Left="425"
+                        Canvas.Top="262.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="H6"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="H6_Click"/>
+
+                <Button x:Name="H7" Canvas.Left="475"
+                        Canvas.Top="262.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="H7"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="H7_Click"/>
+
+                <Button x:Name="H8" Canvas.Left="525"
+                        Canvas.Top="262.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="H8"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="H8_Click"/>
+
+                <Button x:Name="H9" Canvas.Left="575"
+                        Canvas.Top="262.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="H9"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="H9_Click"/>
+
+
+                <Button x:Name="H10" Canvas.Left="625"
+                        Canvas.Top="262.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="H10"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="H10_Click"/>
+
+
+                <Button x:Name="H11" Canvas.Left="675"
+                        Canvas.Top="262.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="H11"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="H11_Click"/>
+
+                <Button x:Name="I1" Canvas.Left="200"
+                        Canvas.Top="300"
+
+                Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="I1"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="I1_Click"/>
+
+                <Button x:Name="I2" Canvas.Left="250"
+                        Canvas.Top="300"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="I2"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="I2_Click"/>
+
+                <Button x:Name="I3" Canvas.Left="300"
+                        Canvas.Top="300"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="I3"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="I3_Click"/>
+
+                <Button x:Name="I4" Canvas.Left="350"
+                        Canvas.Top="300"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="I4"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="I4_Click"/>
+
+                <Button x:Name="I5" Canvas.Left="400"
+                        Canvas.Top="300"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="I5"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="I5_Click"/>
+
+                <Button x:Name="I6" Canvas.Left="450"
+                        Canvas.Top="300"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="I6"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="I6_Click"/>
+
+                <Button x:Name="I7" Canvas.Left="500"
+                        Canvas.Top="300"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="I7"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="I7_Click"/>
+
+                <Button x:Name="I8" Canvas.Left="550"
+                        Canvas.Top="300"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="I8"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="I8_Click"/>
+
+                <Button x:Name="I9" Canvas.Left="600"
+                        Canvas.Top="300"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="I9"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="I9_Click"/>
+
+
+                <Button x:Name="I10" Canvas.Left="650"
+                        Canvas.Top="300"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="I10"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="I10_Click"/>
+
+
+                <Button x:Name="I11" Canvas.Left="700"
+                        Canvas.Top="300"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="I11"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="I11_Click"/>
+
+                <Button x:Name="J1" Canvas.Left="225"
+                        Canvas.Top="337.5"
+
+                Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="J1"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="J1_Click"/>
+
+                <Button x:Name="J2" Canvas.Left="275"
+                        Canvas.Top="337.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="J2"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="J2_Click"/>
+
+                <Button x:Name="J3" Canvas.Left="325"
+                        Canvas.Top="337.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="J3"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="J3_Click"/>
+
+                <Button x:Name="J4" Canvas.Left="375"
+                        Canvas.Top="337.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="J4"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="J4_Click"/>
+
+                <Button x:Name="J5" Canvas.Left="425"
+                        Canvas.Top="337.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="J5"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="J5_Click"/>
+
+                <Button x:Name="J6" Canvas.Left="475"
+                        Canvas.Top="337.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="J6"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="J6_Click"/>
+
+                <Button x:Name="J7" Canvas.Left="525"
+                        Canvas.Top="337.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="J7"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="J7_Click"/>
+
+                <Button x:Name="J8" Canvas.Left="575"
+                        Canvas.Top="337.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="J8"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="J8_Click"/>
+
+                <Button x:Name="J9" Canvas.Left="625"
+                        Canvas.Top="337.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="J9"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="J9_Click"/>
+
+
+                <Button x:Name="J10" Canvas.Left="675"
+                        Canvas.Top="337.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="J10"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="J10_Click"/>
+
+
+                <Button x:Name="J11" Canvas.Left="725"
+                        Canvas.Top="337.5"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="J11"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="J11_Click"/>
+
+                <Button x:Name="K1" Canvas.Left="250"
+                        Canvas.Top="375"
+
+                Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="K1"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="K1_Click"/>
+
+                <Button x:Name="K2" Canvas.Left="300"
+                        Canvas.Top="375"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="K2"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="K2_Click"/>
+
+                <Button x:Name="K3" Canvas.Left="350"
+                        Canvas.Top="375"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="K3"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="K3_Click"/>
+
+                <Button x:Name="K4" Canvas.Left="400"
+                        Canvas.Top="375"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="K4"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="K4_Click"/>
+
+                <Button x:Name="K5" Canvas.Left="450"
+                        Canvas.Top="375"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="K5"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="K5_Click"/>
+
+                <Button x:Name="K6" Canvas.Left="500"
+                        Canvas.Top="375"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="K6"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="K6_Click"/>
+
+                <Button x:Name="K7" Canvas.Left="550"
+                        Canvas.Top="375"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="K7"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="K7_Click"/>
+
+                <Button x:Name="K8" Canvas.Left="600"
+                        Canvas.Top="375"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="K8"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="K8_Click"/>
+
+                <Button x:Name="K9" Canvas.Left="650"
+                        Canvas.Top="375"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="K9"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="K9_Click"/>
+
+
+                <Button x:Name="K10" Canvas.Left="700"
+                        Canvas.Top="375"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="K10"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="K10_Click"/>
+
+
+                <Button x:Name="K11" Canvas.Left="750"
+                        Canvas.Top="375"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="K11"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="K11_Click"/>
+
+
+                <Button x:Name="Turn" Canvas.Left="0"
+                        Canvas.Top="375"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="Turn"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}"/>
+
+                <Button x:Name="TwoPlayerMode" Canvas.Left="100"
+                        Canvas.Top="450"
+        Width="200"
+        Height="40"
+        Background="Blue"
+        BorderThickness="0"
+        Content="Two Player Mode"
+        Foreground="White" Click="TwoPlayerMode_Click"/>
+
+                <Button x:Name="Level1" Canvas.Left="400"
+                        Canvas.Top="450"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="1"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="Click_Level1"/>
+                
+                <Button x:Name="Level2" Canvas.Left="460"
+                        Canvas.Top="450"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="2"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="Click_Level2"/>
+
+                <Button x:Name="Level3" Canvas.Left="520"
+                        Canvas.Top="450"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="3"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="Click_Level3"/>
+
+                <Button x:Name="Level4" Canvas.Left="580"
+                        Canvas.Top="450"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="4"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="Click_Level4"/>
+
+                <Button x:Name="Level5" Canvas.Left="640"
+                        Canvas.Top="450"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="5"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="Click_Level5"/>
+
+                <Button x:Name="Level6" Canvas.Left="430"
+                        Canvas.Top="500"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="6"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="Click_Level6"/>
+
+                <Button x:Name="Level7" Canvas.Left="490"
+                        Canvas.Top="500"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="7"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="Click_Level7"/>
+
+                <Button x:Name="Level8" Canvas.Left="550"
+                        Canvas.Top="500"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="8"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="Click_Level8"/>
+
+                <Button x:Name="Level9" Canvas.Left="610"
+                        Canvas.Top="500"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="9"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="Click_Level9"/>
+
+                <Button x:Name="Level10" Canvas.Left="670"
+                        Canvas.Top="500"
+        Width="50"
+        Height="50"
+        Background="Blue"
+        BorderThickness="0"
+        Content="10"
+        Foreground="White"
+        Style="{StaticResource ButtonStyle1}" Click="Click_Level10"/>
+
+                <Button x:Name="AutoGameButton" Canvas.Left="100"
+                        Canvas.Top="510"
+        Width="200"
+        Height="40"
+        Background="Blue"
+        BorderThickness="0"
+        Content="AutoGame"
+        Foreground="White" Click="Click_AutoSelector" />
+
+                <Button x:Name="PlayComputer" Canvas.Left="100"
+                        Canvas.Top="350"
+        Width="80"
+        Height="40"
+        Background="Blue"
+        BorderThickness="0"
+        Content="Single"
+        Foreground="White" Click="Click_Singleton"  />
+            </Canvas>
+        </StackPanel>
+    </Grid>
+</Page>
